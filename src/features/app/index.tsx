@@ -1,8 +1,8 @@
 import AppBar from "./app-bar";
-import Body from "./body";
-import Sider from "./sider";
+import Body from "./app-body";
+import Sider from "./app-sider";
 import { Box } from '@mui/material';
-import Filter from '@/components/filter';
+import AppNewsProvider from "./app-news-provider";
 
 import * as React from 'react';
 
@@ -21,7 +21,7 @@ export default function MiniDrawer() {
     <Box sx={{ display: 'flex' }}>
       <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Sider open={open} handleDrawerClose={handleDrawerClose}>
-        <Filter />
+        <AppNewsProvider />
       </Sider>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Body />

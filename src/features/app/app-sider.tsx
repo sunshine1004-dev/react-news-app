@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer as MuiDrawer, Divider, IconButton } from '@mui/material';
+import { Drawer as MuiDrawer, Divider, IconButton, Typography } from '@mui/material';
 import { styled, Theme, CSSObject, useTheme } from '@mui/material/styles';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -54,8 +54,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
+  background: theme.palette.grey['700'],
+  paddingLeft: theme.spacing(4),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -67,11 +69,11 @@ const Sider = ({ children, handleDrawerClose, open }: Props) => {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
+        <Typography variant='h6' sx={{color: '#fff'}}>News App</Typography>
+        <IconButton onClick={handleDrawerClose} sx={{color: '#fff'}}>
           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </DrawerHeader>
-      <Divider />
       <Divider />
       {children}
     </Drawer>

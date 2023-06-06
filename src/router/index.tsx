@@ -4,6 +4,7 @@ import App from '@/features/app';
 import SignIn from '@/features/sign-in';
 import SignUp from '@/features/sign-up';
 import Dashboard from '@/features/dashboard';
+import NewsApi from '@/features/newsapi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserInfo } from '@/common/auth';
@@ -68,8 +69,16 @@ export default createBrowserRouter([
         element: <Auth><SignUp /></Auth>
       },
       {
-        path: '/',
-        element: <LoggedIn><Dashboard /></LoggedIn>
+        path: '/newsapi',
+        element: <NewsApi />
+      },
+      {
+        path: '/guardian',
+        element: <p>The guardian</p>
+      },
+      {
+        path: '/nytimes',
+        element: <p>New York Times</p>
       }
     ]
   }

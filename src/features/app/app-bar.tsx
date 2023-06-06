@@ -1,4 +1,4 @@
-import { AppBar as MuiAppBar, Toolbar, Button, IconButton, Typography } from '@mui/material';
+import { AppBar as MuiAppBar, Toolbar, Button, IconButton } from '@mui/material';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { RootState } from '@/redux';
@@ -58,7 +58,7 @@ export default ({ open, handleDrawerOpen }: Props) => {
           <MenuIcon />
         </IconButton>
 
-        <Typography sx={{ flexGrow: 1 }}>News App</Typography>
+        <div style={{flexGrow: 1}}></div>
 
         {
           isSignUp &&
