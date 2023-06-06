@@ -15,7 +15,7 @@ const Pagination = ({ count, handleChange, page }: Props) => {
 
 
   return (
-    <Box mt={3}>
+    <Box>
       <MuiPagination
         page={page}
         sx={{

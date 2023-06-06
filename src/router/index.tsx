@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '@/features/app';
 import SignIn from '@/features/sign-in';
 import SignUp from '@/features/sign-up';
-import Dashboard from '@/features/dashboard';
+// import Dashboard from '@/features/dashboard';
 import NewsApi from '@/features/newsapi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -70,7 +70,7 @@ export default createBrowserRouter([
       },
       {
         path: '/newsapi',
-        element: <NewsApi />
+        element: <LoggedIn><NewsApi /></LoggedIn>
       },
       {
         path: '/guardian',

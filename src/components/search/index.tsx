@@ -9,7 +9,7 @@ import SearchFilter from './search-filter';
 
 interface Props {
   sort?: boolean;
-  count: number
+  count?: number;
 }
 
 const SearchBar = styled(Paper)(
@@ -20,7 +20,7 @@ const SearchBar = styled(Paper)(
   `
 );
 
-const Search = ({ sort = true, count = 241 }: Props) => {
+const Search = ({ sort=false, count=0 }: Props) => {
   return (
     <Box>
       <SearchBar elevation={7}>
