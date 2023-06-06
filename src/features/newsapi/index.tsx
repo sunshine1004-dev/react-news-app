@@ -1,4 +1,4 @@
-import Search from '@/components/search-bar';
+import Search from '@/components/search';
 
 const NewsApi = () => {
   return (
