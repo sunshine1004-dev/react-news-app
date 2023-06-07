@@ -3,7 +3,7 @@ import { Typography, CardHeader } from '@mui/material';
 import SignUpForm from './sign-up-form';
 import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveContainer from '@/components/mq/auth-form-container';
-import { signUp as signUpAction } from '@/redux/authSlice';
+import { signUp as signUpAction } from '@/redux/auth-slice';
 import { SignUpPayload } from './type';
 import WithNotification, { ComponentProps } from '@/components/Hoc/withNotification';
 

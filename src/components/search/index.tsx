@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from 'react'
 import { InputBase, Box, Stack, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -6,6 +7,7 @@ import Dropdown from '@/components/dropdown';
 import SearchFeed from './search-feed';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import SearchFilter from './search-filter';
+import { NewsApiFilter } from '@/components/filter';
 
 interface Props {
   sort?: boolean;
@@ -21,9 +23,29 @@ const SearchBar = styled(Paper)(
 );
 
 const Search = ({ sort=false, count=0 }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Box>
-      <SearchBar elevation={7}>
+      <SearchBar elevation={7} ref={containerRef}>
         <InputBase
           fullWidth
           placeholder='Input what you want to find...'
@@ -33,7 +55,7 @@ const Search = ({ sort=false, count=0 }: Props) => {
             </InputAdornment>
           }
         />
-        <SearchFilter />
+        <SearchFilter width={containerWidth} body={<NewsApiFilter />} />
       </SearchBar>
 
       <Stack gap={2} mt={2}>
@@ -51,6 +73,8 @@ const Search = ({ sort=false, count=0 }: Props) => {
             sort &&
             <Dropdown
               defaultValue='relevancy'
+              variant='outlined'
+              handleChange={(val) => console.log(val) }
               sx={{ width: 150 }}
               size='small'
               option={[
@@ -63,6 +87,8 @@ const Search = ({ sort=false, count=0 }: Props) => {
 
           <Dropdown
             defaultValue={10}
+            variant='outlined'
+            handleChange={(val) => console.log(val) }
             sx={{ width: 80 }}
             size='small'
             option={[

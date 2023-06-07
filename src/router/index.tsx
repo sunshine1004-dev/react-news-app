@@ -3,12 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '@/features/app';
 import SignIn from '@/features/sign-in';
 import SignUp from '@/features/sign-up';
-// import Dashboard from '@/features/dashboard';
 import NewsApi from '@/features/newsapi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserInfo } from '@/common/auth';
-import { User } from '@/redux/type';
+import { User } from '@/type';
 
 type Props = {
   children: React.ReactNode

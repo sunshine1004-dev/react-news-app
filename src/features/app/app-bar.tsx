@@ -47,7 +47,6 @@ export default ({ open, handleDrawerOpen }: Props) => {
       <Toolbar sx={{ background: '#2a3642' }}>
         <IconButton
           color="inherit"
-          aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
           sx={{

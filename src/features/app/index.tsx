@@ -2,25 +2,28 @@ import AppBar from "./app-bar";
 import Body from "./app-body";
 import Sider from "./app-sider";
 import { Box } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSider } from '@/redux/app-slice';
+import { RootState } from '@/redux'
 import AppNewsProvider from "./app-news-provider";
 
-import * as React from 'react';
-
 export default function MiniDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const { isSiderOpen } = useSelector((state: RootState) => state.app);
+  const dispatch = useDispatch();
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    dispatch(setSider(true));
+
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    dispatch(setSider(false));
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <Sider open={open} handleDrawerClose={handleDrawerClose}>
+      <AppBar open={isSiderOpen} handleDrawerOpen={handleDrawerOpen} />
+      <Sider open={isSiderOpen} handleDrawerClose={handleDrawerClose}>
         <AppNewsProvider />
       </Sider>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

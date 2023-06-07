@@ -1,7 +1,8 @@
-import Select, { SelectProps } from '@mui/material/Select';
+import TextField, { BaseTextFieldProps } from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-interface Props extends SelectProps {
+interface Props extends BaseTextFieldProps {
+  handleChange: (val: string) => void;
   option: {
     value: string | number,
     label: string
@@ -9,15 +10,16 @@ interface Props extends SelectProps {
 }
 
 const Dropdown = (props: Props) => {
-  const { option, ...otherProps } = props;
+  const { option, handleChange, ...otherProps } = props;
+
   return (
-    <Select {...otherProps}>
+    <TextField select onChange={(e) => handleChange(e.target.value)} {...otherProps}>
       {
         option.map(item => (
           <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
         ))
       }
-    </Select>
+    </TextField>
   )
 }
 

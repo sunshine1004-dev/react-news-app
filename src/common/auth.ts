@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import { setUser } from "@/redux/authSlice";
+import { setUser } from "@/redux/auth-slice";
 import { User } from "@/redux/type";
 
 type Payload = {

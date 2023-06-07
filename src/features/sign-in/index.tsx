@@ -3,7 +3,7 @@ import SignInForm from './sign-in-form';
 import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveContainer from '@/components/mq/auth-form-container';
 import { useDispatch } from 'react-redux';
-import { signIn as signInAction } from '@/redux/authSlice';
+import { signIn as signInAction } from '@/redux/auth-slice';
 import { SignInPayload } from './type';
 import WithNotification, { ComponentProps } from '@/components/Hoc/withNotification';
 import { login } from '@/common/auth';

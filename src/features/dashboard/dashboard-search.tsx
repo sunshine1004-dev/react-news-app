@@ -30,6 +30,7 @@ const Search = () => {
         <Chip label='Full Stack' variant='filled' color='primary' onDelete={() => console.log('hello')} />
         <Box sx={{ flexGrow: 1 }} />
         <Dropdown
+          handleChange={val => console.log(val)}
           defaultValue='latest'
           sx={{ width: 150 }}
           size='small'
@@ -40,6 +41,7 @@ const Search = () => {
         />
 
         <Dropdown
+          handleChange={val => console.log(val)}
           defaultValue={10}
           sx={{ width: 80 }}
           size='small'

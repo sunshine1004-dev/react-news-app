@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import api from "@/api";
-import { User } from "./type";
+import { User } from "@/type";
 
 import { SignInPayload } from "@/features/sign-in/type";
 import { SignUpPayload } from "@/features/sign-up/type";
 
-interface AuthState {
+export interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
   error: string;
