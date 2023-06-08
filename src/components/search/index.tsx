@@ -8,10 +8,17 @@ import SearchFeed from './search-feed';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import SearchFilter from './search-filter';
 import { NewsApiFilter } from '@/components/filter';
+import { NewsApiQuery } from '@/type'
 
 interface Props {
   sort?: boolean;
-  count?: number;
+  total?: number;
+  pageSize?: number;
+  query?: string;
+  queryObj?: NewsApiQuery;
+  setQuery: (q: string) => void;
+  setPageSize: (pageSize: number) => void;
+  setFilter: (query: NewsApiQuery) => void;
 }
 
 const SearchBar = styled(Paper)(
@@ -22,9 +29,11 @@ const SearchBar = styled(Paper)(
   `
 );
 
-const Search = ({ sort=false, count=0 }: Props) => {
+const Search = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { sort, total, pageSize, query, setQuery, setPageSize, setFilter, queryObj } = props;
 
+  const [queryString, setQueryString] = useState(query);
   const [containerWidth, setContainerWidth] = useState<number>(0);
 
   useEffect(() => {
@@ -49,13 +58,19 @@ const Search = ({ sort=false, count=0 }: Props) => {
         <InputBase
           fullWidth
           placeholder='Input what you want to find...'
+          value={queryString}
+          onChange={(e) => setQueryString(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && setQuery(queryString || '')}
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />
             </InputAdornment>
           }
         />
-        <SearchFilter width={containerWidth} body={<NewsApiFilter />} />
+        <SearchFilter 
+          width={containerWidth} 
+          body={<NewsApiFilter query={queryObj || {}} handleSearch={setFilter} />} 
+        />
       </SearchBar>
 
       <Stack gap={2} mt={2}>
@@ -66,7 +81,7 @@ const Search = ({ sort=false, count=0 }: Props) => {
             sx={{ flexGrow: 1 }}
             color='gray'
           >
-            {count}
+            {total}
           </Typography>
 
           {
@@ -74,7 +89,7 @@ const Search = ({ sort=false, count=0 }: Props) => {
             <Dropdown
               defaultValue='relevancy'
               variant='outlined'
-              handleChange={(val) => console.log(val) }
+              handleChange={(val) => console.log(val)}
               sx={{ width: 150 }}
               size='small'
               option={[
@@ -85,10 +100,12 @@ const Search = ({ sort=false, count=0 }: Props) => {
             />
           }
 
+
           <Dropdown
             defaultValue={10}
             variant='outlined'
-            handleChange={(val) => console.log(val) }
+            value={pageSize}
+            handleChange={(val) => setPageSize(Number(val))}
             sx={{ width: 80 }}
             size='small'
             option={[

@@ -5,7 +5,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import countryDemo from 'i18n-iso-countries';
 import enLocale from 'i18n-iso-countries/langs/en.json';
 
-export default function CountrySelect() {
+interface Props {
+  value: string;
+  handleChange: (coun: string) => void;
+}
+
+interface Option {
+  label: string;
+  value: string;
+}
+
+export default function CountrySelect(props: Props) {
   countryDemo.registerLocale(enLocale);
 
   const countryObj = countryDemo.getNames("en", { select: "alias" });
@@ -18,6 +28,10 @@ export default function CountrySelect() {
 
   const definedCountries = countryNames.filter(coun => defined.has(coun.value.toLowerCase()));
 
+  function isOptionEqualToValue(option: Option, value: Option) {
+    return option.value === value.value;
+  }
+
   return (
     <Autocomplete
       id="country-select-demo"
@@ -25,8 +39,10 @@ export default function CountrySelect() {
       options={definedCountries}
       size='small'
       autoHighlight
+      isOptionEqualToValue={isOptionEqualToValue}
       getOptionLabel={(option) => option.label}
-      onChange={e => console.log(e.target)} 
+      value={definedCountries.find(item => item.value === props.value) || null}
+      onChange={(_e, value) => props.handleChange(value?.value || "")}
       renderOption={(props, option) => (
         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
           <img

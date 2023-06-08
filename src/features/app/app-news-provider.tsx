@@ -1,8 +1,10 @@
 import { MenuList, MenuItem, MenuItemProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { setNewsApiQuery } from '@/redux/news-slice'
+import { initialState, setGuardianQuery } from '@/redux/news-slice';
 
-const Menu = styled(MenuList)(({theme}) => `
+const Menu = styled(MenuList)(({ theme }) => `
   background: ${theme.palette.grey[700]};
   padding: ${theme.spacing(1, 2)};
   color: #fff;
@@ -13,7 +15,7 @@ interface ItemProps extends MenuItemProps {
   active?: boolean;
 }
 
-const Item = styled(MenuItem)<ItemProps>(({theme}) => `
+const Item = styled(MenuItem)<ItemProps>(({ theme }) => `
   padding: ${theme.spacing(2)};
   border-radius: ${theme.spacing(2)};
   margin-top: ${theme.spacing(1)};
@@ -22,13 +24,31 @@ const Item = styled(MenuItem)<ItemProps>(({theme}) => `
 
 const AppNewsProvider = () => {
   const navigate = useNavigate();
+  const [_searchParams, setSearchParams] = useSearchParams();
+
+
+  const getNewsApi = () => {
+    navigate('/newsapi');
+
+    setNewsApiQuery();
+    const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
+    setSearchParams(query);
+  }
+
+  const getGuardian = () => {
+    navigate('/guardian');
+
+    setGuardianQuery();
+    const query = Object.fromEntries(Object.entries(initialState.guardianQuery).map(([key, value]) => [key, String(value)]));
+    setSearchParams(query);
+  }
 
   return (
     <Menu>
-      <Item onClick={() => navigate('/newsapi')}>
+      <Item onClick={getNewsApi}>
         NewsAPI
       </Item>
-      <Item onClick={() => navigate('/guardian')}>
+      <Item onClick={getGuardian}>
         The Guardian
       </Item>
       <Item onClick={() => navigate('/nytimes')}>

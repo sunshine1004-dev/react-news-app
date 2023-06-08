@@ -18,8 +18,8 @@ export interface NewsState {
   error: string;
 }
 
-const initialState: NewsState = {
-  total: 0,
+export const initialState: NewsState = {
+  total: 1000,
   type: "newsapi",
   articles: [],
   fetchMethod: "topHeadlines",
@@ -64,6 +64,12 @@ export const NewsSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    setNewsApiQuery: (state) => {
+      state.newsApiQuery = initialState.newsApiQuery
+    },
+    setGuardianQuery: (state) => {
+      state.guardianQuery = initialState.guardianQuery
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getNewsApiArticles.pending, (state) => {
@@ -81,6 +87,6 @@ export const NewsSlice = createSlice({
   }
 });
 
-export const { setType } = NewsSlice.actions;
+export const { setType, setLoading, setNewsApiQuery, setGuardianQuery } = NewsSlice.actions;
 
 export default NewsSlice.reducer;

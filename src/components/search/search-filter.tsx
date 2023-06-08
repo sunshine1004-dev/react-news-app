@@ -6,7 +6,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 
 interface Props {
   body: React.ReactNode;
-  width: number
+  width: number;
 }
 
 const SearchFilter = ({ width, body }: Props) => {

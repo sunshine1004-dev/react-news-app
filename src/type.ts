@@ -26,6 +26,7 @@ export type NewsApiQuery = {
   to?: string;
   language?: string;
   category?: string;
+  country?: string;
   author?: string;
   sort_by?: "relevancy" | "popularity" | "publishedAt";
   page_size?: number;

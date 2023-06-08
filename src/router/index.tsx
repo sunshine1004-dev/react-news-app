@@ -4,6 +4,7 @@ import App from '@/features/app';
 import SignIn from '@/features/sign-in';
 import SignUp from '@/features/sign-up';
 import NewsApi from '@/features/newsapi';
+import Guardian from '@/features/guardian';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserInfo } from '@/common/auth';
@@ -73,7 +74,7 @@ export default createBrowserRouter([
       },
       {
         path: '/guardian',
-        element: <p>The guardian</p>
+        element: <LoggedIn><Guardian /></LoggedIn>
       },
       {
         path: '/nytimes',
