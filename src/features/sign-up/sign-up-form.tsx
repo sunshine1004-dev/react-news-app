@@ -68,7 +68,7 @@ const SignUpForm = (props: Props) => {
           type='password'
           fullWidth
         />
-        <LoadingBtn loading={loading} type='submit' variant='contained' size='large' fullWidth>Sign Up</LoadingBtn>
+        <LoadingBtn loading={loading} color='error' type='submit' variant='contained' size='large' fullWidth>Sign Up</LoadingBtn>
       </Stack>
     </form>
   )

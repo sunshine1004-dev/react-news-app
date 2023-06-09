@@ -56,7 +56,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
-  background: theme.palette.grey['700'],
+  background: theme.palette.error.light,
   paddingLeft: theme.spacing(4),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,

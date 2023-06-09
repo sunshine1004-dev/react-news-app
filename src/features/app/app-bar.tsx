@@ -45,19 +45,23 @@ export default ({ open, handleDrawerOpen }: Props) => {
   return (
     <AppBar position='fixed' open={open}>
       <Toolbar sx={{ background: '#2a3642' }}>
-        <IconButton
-          color="inherit"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={{
-            marginRight: 5,
-            ...(open && { display: 'none' }),
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
+        {
+          isAuthenticated && (
+            <IconButton
+              color="inherit"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )
+        }
 
-        <div style={{flexGrow: 1}}></div>
+        <div style={{ flexGrow: 1 }}></div>
 
         {
           isSignUp &&

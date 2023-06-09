@@ -3,17 +3,17 @@ import NewsList from '@/components/news-list';
 import { RootState } from '@/redux'
 import { NewsState } from '@/redux/news-slice'
 import { useSelector } from 'react-redux'
-import withNewsApi from '@/components/Hoc/withNewsApi'
+import withGuardianApi from '@/components/Hoc/withGuardianApi';
 import { useSearchParams } from 'react-router-dom'
-import { NewsApiQuery } from '@/type'
+import { GuardianQuery } from '@/type'
 
 const NewsApi = () => {
   const { total } = useSelector<RootState, NewsState>((state) => state.news)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const queryObj: NewsApiQuery = Object.fromEntries(searchParams.entries());
+  const queryObj: GuardianQuery = Object.fromEntries(searchParams.entries());
   const page = queryObj.page;
-  const pageSize = queryObj.page_size;
+  const pageSize = queryObj['page-size'];
   const query = queryObj.q || '';
 
   const setPage = (page: number) => {
@@ -28,7 +28,7 @@ const NewsApi = () => {
   const setPageSize = (pageSize: number) => {
     setSearchParams((prevSearchParams) => {
       const newSearchParams = new URLSearchParams(prevSearchParams);
-      newSearchParams.set('page_size', String(pageSize));
+      newSearchParams.set('page-size', String(pageSize));
       return newSearchParams.toString();
     });
   }
@@ -41,7 +41,7 @@ const NewsApi = () => {
     });
   }
 
-  const setFilter = (query: NewsApiQuery) => {
+  const setFilter = (query: GuardianQuery) => {
     setSearchParams((prevSearchParams) => {
       const newSearchParams = new URLSearchParams(prevSearchParams);
 
@@ -76,4 +76,4 @@ const NewsApi = () => {
   )
 }
 
-export default withNewsApi(NewsApi);
+export default withGuardianApi(NewsApi);

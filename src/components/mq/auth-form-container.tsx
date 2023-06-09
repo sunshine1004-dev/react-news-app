@@ -12,7 +12,7 @@ type ResponsiveCardProps = CardProps & {
 
 const Container = styled(Card)<ResponsiveCardProps>(
   ({ theme, mobile }) => `
-  position: absolute;
+  position: fixed;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);

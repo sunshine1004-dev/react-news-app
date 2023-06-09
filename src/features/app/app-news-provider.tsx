@@ -5,7 +5,7 @@ import { setNewsApiQuery } from '@/redux/news-slice'
 import { initialState, setGuardianQuery } from '@/redux/news-slice';
 
 const Menu = styled(MenuList)(({ theme }) => `
-  background: ${theme.palette.grey[700]};
+  background: ${theme.palette.error.light};
   padding: ${theme.spacing(1, 2)};
   color: #fff;
   height: 100%;
@@ -30,7 +30,7 @@ const AppNewsProvider = () => {
   const getNewsApi = () => {
     navigate('/newsapi');
 
-    setNewsApiQuery();
+    setNewsApiQuery(initialState.newsApiQuery);
     const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
     setSearchParams(query);
   }
@@ -38,7 +38,7 @@ const AppNewsProvider = () => {
   const getGuardian = () => {
     navigate('/guardian');
 
-    setGuardianQuery();
+    setGuardianQuery(initialState.guardianQuery);
     const query = Object.fromEntries(Object.entries(initialState.guardianQuery).map(([key, value]) => [key, String(value)]));
     setSearchParams(query);
   }

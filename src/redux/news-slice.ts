@@ -38,7 +38,7 @@ export const initialState: NewsState = {
 };
 
 export const getNewsApiArticles = createAsyncThunk(
-  "auth/signIn",
+  "news/getNewsApiArticles",
   async ({
     query,
     method,
@@ -50,6 +50,14 @@ export const getNewsApiArticles = createAsyncThunk(
     return response.data;
   }
 );
+
+export const getGuardianApiArticles = createAsyncThunk(
+  "news/getGuardianApiArticles",
+  async(query: GuardianQuery) => {
+    const response = await api.GuardianApiCall(query);
+    return response.data;
+  }
+)
 
 export const NewsSlice = createSlice({
   name: "news",
@@ -64,11 +72,11 @@ export const NewsSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    setNewsApiQuery: (state) => {
-      state.newsApiQuery = initialState.newsApiQuery
+    setNewsApiQuery: (state, action: PayloadAction<NewsApiQuery>) => {
+      state.newsApiQuery = action.payload
     },
-    setGuardianQuery: (state) => {
-      state.guardianQuery = initialState.guardianQuery
+    setGuardianQuery: (state, action: PayloadAction<GuardianQuery>) => {
+      state.guardianQuery = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -81,6 +89,18 @@ export const NewsSlice = createSlice({
       state.total = action.payload.totalResults;
     }),
     builder.addCase(getNewsApiArticles.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || "";
+    }),
+    builder.addCase(getGuardianApiArticles.pending, (state) => {
+      state.loading = true;
+    }),
+    builder.addCase(getGuardianApiArticles.fulfilled, (state, action) => {
+      state.loading = false;
+      state.articles = action.payload.results;
+      state.total = action.payload.total;
+    }),
+    builder.addCase(getGuardianApiArticles.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message || "";
     })

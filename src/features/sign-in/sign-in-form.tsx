@@ -48,7 +48,7 @@ const SignInForm = (props: Props) => {
           helperText={(validator.errors.password && validator.touched.password) && validator.errors.password}
           fullWidth
         />
-        <LoadingBtn loading={loading} type='submit' variant='contained' size='large' fullWidth>Sign In</LoadingBtn>
+        <LoadingBtn loading={loading} color='error' type='submit' variant='contained' size='large' fullWidth>Sign In</LoadingBtn>
       </Stack>
     </form>
   )

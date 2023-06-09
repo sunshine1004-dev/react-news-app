@@ -51,3 +51,9 @@ export type GuardianQuery = {
   "show-tags"?: string;
   "show-section"?: string;
 };
+
+export type Feed = {
+  user_id: string;
+  label: string;
+  query: any;
+}
