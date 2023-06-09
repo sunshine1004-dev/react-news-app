@@ -53,7 +53,9 @@ export type GuardianQuery = {
 };
 
 export type Feed = {
-  user_id: string;
+  id?: string;
+  user_id?: string;
   label: string;
   query: any;
+  queryString?: string;
 }

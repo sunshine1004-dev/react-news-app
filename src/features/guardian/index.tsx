@@ -1,7 +1,7 @@
 import Search from '@/components/search';
 import NewsList from '@/components/news-list';
 import { RootState } from '@/redux'
-import { NewsState } from '@/redux/news-slice'
+import { NewsState, setGuardianQuery, initialState } from '@/redux/news-slice'
 import { useSelector } from 'react-redux'
 import withGuardianApi from '@/components/Hoc/withGuardianApi';
 import { useSearchParams } from 'react-router-dom'
@@ -14,7 +14,7 @@ const NewsApi = () => {
   const queryObj: GuardianQuery = Object.fromEntries(searchParams.entries());
   const page = queryObj.page;
   const pageSize = queryObj['page-size'];
-  const query = queryObj.q || '';
+  const query = queryObj.q;
 
   const setPage = (page: number) => {
 
@@ -55,16 +55,23 @@ const NewsApi = () => {
     });
   }
 
+  const setDefault = () => {
+    setGuardianQuery(initialState.newsApiQuery);
+    const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
+    setSearchParams(query);
+  }
+
   return (
     <>
       <Search
         total={total}
         pageSize={Number(pageSize)}
         setPageSize={setPageSize}
-        query={query}
+        query={query || ''}
         queryObj={queryObj}
         setQuery={setQuery}
         setFilter={setFilter}
+        setDefault={setDefault}
       />
       <NewsList
         page={Number(page)}

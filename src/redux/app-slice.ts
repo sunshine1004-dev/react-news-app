@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface LayoutState {
+export interface LayoutState {
   isSiderOpen: boolean
 }
 

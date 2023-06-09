@@ -1,8 +1,9 @@
 import { AppBar as MuiAppBar, Toolbar, Button, IconButton } from '@mui/material';
 import { useMatch, useNavigate } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux';
 import { styled } from '@mui/material/styles';
+import { logOut as logOutAction } from '@/redux/auth-slice';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -37,10 +38,15 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default ({ open, handleDrawerOpen }: Props) => {
+  const dispatch = useDispatch();
   const isSignUp = useMatch('/sign-up');
   const isSignIn = useMatch('/sign-in');
   const navigation = useNavigate();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  const logOut = () => {
+    dispatch(logOutAction());
+  }
 
   return (
     <AppBar position='fixed' open={open}>
@@ -74,7 +80,7 @@ export default ({ open, handleDrawerOpen }: Props) => {
 
         {
           isAuthenticated &&
-          <Button sx={{ color: '#fff' }}>Log out</Button>
+          <Button sx={{ color: '#fff' }} onClick={logOut}>Log out</Button>
         }
       </Toolbar>
     </AppBar>

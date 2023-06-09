@@ -1,7 +1,7 @@
 import Search from '@/components/search';
 import NewsList from '@/components/news-list';
 import { RootState } from '@/redux'
-import { NewsState } from '@/redux/news-slice'
+import { NewsState, initialState, setNewsApiQuery } from '@/redux/news-slice'
 import { useSelector } from 'react-redux'
 import withNewsApi from '@/components/Hoc/withNewsApi'
 import { useSearchParams } from 'react-router-dom'
@@ -55,6 +55,12 @@ const NewsApi = () => {
     });
   }
 
+  const setDefault = () => {
+    setNewsApiQuery(initialState.newsApiQuery);
+    const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
+    setSearchParams(query);
+  }
+
   return (
     <>
       <Search
@@ -63,6 +69,7 @@ const NewsApi = () => {
         setPageSize={setPageSize}
         query={query}
         queryObj={queryObj}
+        setDefault={setDefault}
         setQuery={setQuery}
         setFilter={setFilter}
       />

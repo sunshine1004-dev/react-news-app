@@ -35,7 +35,7 @@ export default function CountrySelect(props: Props) {
   return (
     <Autocomplete
       id="country-select-demo"
-      sx={{ width: 300 }}
+      fullWidth
       options={definedCountries}
       size='small'
       autoHighlight

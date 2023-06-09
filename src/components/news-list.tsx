@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Grid, Box, Paper } from '@mui/material';
+import { Grid, Box, Paper, useMediaQuery, Theme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import NewsCard from '@/components/news-card';
 import Pagination from '@/components/pagination';
@@ -24,6 +24,7 @@ const Dashboard = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const { page, pageSize, total, setPage } = props;
+  const mobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,7 +64,7 @@ const Dashboard = (props: Props) => {
       </Grid>
       <PaginationContainer sx={{ width: containerWidth }}>
         <Paper elevation={10} sx={{ padding: 1, borderRadius: 8 }}>
-          <Pagination handleChange={handleChange} page={page} count={Math.floor(total / pageSize)} />
+          <Pagination mobile={mobile} handleChange={handleChange} page={page} count={Math.floor(total / pageSize)} />
         </Paper>
       </PaginationContainer>
     </Box>

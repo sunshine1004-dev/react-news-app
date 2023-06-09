@@ -4,15 +4,15 @@ import { Pagination as MuiPagination, Box } from '@mui/material';
 interface Props {
   count: number;
   handleChange: (pageNum: number) => void;
-  page: number
+  page: number;
+  mobile: boolean;
 }
 
-const Pagination = ({ count, handleChange, page }: Props) => {
+const Pagination = ({ count, handleChange, page, mobile }: Props) => {
 
   const onChange = (_event: ChangeEvent<unknown>, value: number) => {
     handleChange(value)
   };
-
 
   return (
     <Box>
@@ -27,7 +27,8 @@ const Pagination = ({ count, handleChange, page }: Props) => {
         onChange={onChange}
         count={count}
         color="primary"
-        boundaryCount={2}
+        siblingCount={mobile ? 0 : 1}
+        boundaryCount={mobile ? 1 : 2}
       />
     </Box>
   );

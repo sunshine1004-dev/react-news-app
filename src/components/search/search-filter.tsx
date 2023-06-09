@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTheme } from '@mui/material/styles';
-import { Popover, IconButton, Box } from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import { Popover, IconButton, Box, useMediaQuery } from '@mui/material';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import TuneIcon from '@mui/icons-material/Tune';
 
@@ -11,6 +11,7 @@ interface Props {
 
 const SearchFilter = ({ width, body }: Props) => {
   const theme = useTheme();
+  const mobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   return (
     <PopupState variant='popover' popupId="demo-popup-popover">
@@ -29,12 +30,18 @@ const SearchFilter = ({ width, body }: Props) => {
               vertical: 'top',
               horizontal: 'right',
             }}
-            sx={{ marginTop: 2, marginLeft: 2 }}
+            sx={{ marginTop: 2, marginLeft: mobile ? 1 : 2 }}
           >
             <Box
               p={3}
-              sx={{ width, boxSizing: 'border-box', right: 0, borderRadius: theme.spacing(8) }}>
-              { body }
+              sx={{
+                width,
+                boxSizing: 'border-box',
+                right: 0,
+                borderRadius: theme.spacing(8),
+                maxHeight: 500,
+              }}>
+              {body}
             </Box>
           </Popover>
         </>

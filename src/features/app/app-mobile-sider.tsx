@@ -10,7 +10,7 @@ interface Props {
   open: boolean
 }
 
-const drawerWidth = 300;
+const drawerWidth = 330;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -30,9 +30,10 @@ const closedMixin = (theme: Theme): CSSObject => ({
   width: 0
 });
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Drawer = styled(MuiDrawer)(
   ({ theme, open }) => ({
     width: drawerWidth,
+    zIndex: 13000,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -44,11 +45,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
-  }),
-);
+  })
+)
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
+  boxSizing: 'border-box',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1),
@@ -58,15 +60,15 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const Sider = ({ children, handleDrawerClose, open }: Props) => {
+const MobileSider = ({ children, handleDrawerClose, open }: Props) => {
 
   const theme = useTheme();
 
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer variant="temporary" open={open}>
       <DrawerHeader>
-        <Typography variant='h6' sx={{color: '#fff'}}>News App</Typography>
-        <IconButton onClick={handleDrawerClose} sx={{color: '#fff'}}>
+        <Typography variant='h6' sx={{ color: '#fff' }}>News App</Typography>
+        <IconButton onClick={handleDrawerClose} sx={{ color: '#fff' }}>
           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </DrawerHeader>
@@ -76,4 +78,4 @@ const Sider = ({ children, handleDrawerClose, open }: Props) => {
   )
 }
 
-export default Sider;
+export default MobileSider;

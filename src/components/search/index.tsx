@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useMemo } from 'react'
 import { InputBase, Box, Stack, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -19,6 +19,7 @@ interface Props {
   setQuery: (q: string) => void;
   setPageSize: (pageSize: number) => void;
   setFilter: (query: NewsApiQuery) => void;
+  setDefault: () => void;
 }
 
 const SearchBar = styled(Paper)(
@@ -31,26 +32,33 @@ const SearchBar = styled(Paper)(
 
 const Search = (props: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { sort, total, pageSize, query, setQuery, setPageSize, setFilter, queryObj } = props;
+  const { sort, total, pageSize, query, setQuery, setPageSize, setFilter, queryObj, setDefault } = props;
 
   const [queryString, setQueryString] = useState(query);
   const [containerWidth, setContainerWidth] = useState<number>(0);
 
   useEffect(() => {
+
     const handleResize = () => {
       if (containerRef.current) {
         setContainerWidth(containerRef.current.offsetWidth);
       }
     };
 
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
+    if (containerRef.current) {
+      window.addEventListener('resize', handleResize);
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useMemo(() => {
+    setQueryString(query);
+  }, [query]);
+
 
   return (
     <Box>
@@ -67,14 +75,14 @@ const Search = (props: Props) => {
             </InputAdornment>
           }
         />
-        <SearchFilter 
-          width={containerWidth} 
-          body={<NewsApiFilter query={queryObj || {}} handleSearch={setFilter} />} 
+        <SearchFilter
+          width={containerWidth}
+          body={<NewsApiFilter query={queryObj || {}} handleSearch={setFilter} />}
         />
       </SearchBar>
 
       <Stack gap={2} mt={2}>
-        <SearchFeed tabs={[{ label: 'sports', url: '/sports' }, { label: 'family', url: '/family' }]} />
+        <SearchFeed backDefault={setDefault} />
         <Stack direction='row' gap={2} alignItems='center'>
           <RssFeedIcon />
           <Typography
@@ -99,7 +107,6 @@ const Search = (props: Props) => {
               ]}
             />
           }
-
 
           <Dropdown
             defaultValue={10}

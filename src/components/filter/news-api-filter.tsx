@@ -11,6 +11,7 @@ import 'dayjs/locale/en';
 import { capitalize } from '@/utility/common';
 import { NewsApiQuery } from '@/type'
 import dayjs, { Dayjs } from 'dayjs';
+import { useMediaQuery, Theme } from '@mui/material';
 
 interface Props {
   query: NewsApiQuery;
@@ -40,6 +41,8 @@ const NewsApiFilter = ({ query, handleSearch }: Props) => {
     };
     handleSearch(searchParams);
   };
+
+  const mobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
   const handleDateRange = (dateRange: DateRange<Dayjs>) => {
     setRange(dateRange);
@@ -132,16 +135,29 @@ const NewsApiFilter = ({ query, handleSearch }: Props) => {
             />
           </Grid>
 
-          <Grid item container xs={12} justifyContent='flex-end'>
-            <Button
-              sx={{ mr: 2 }}
-              variant='outlined'
-              startIcon={<FavoriteIcon />}
-            >
-              Save
-            </Button>
-            <Button variant='contained' onClick={onSearch}>Search</Button>
-          </Grid>
+          {
+            mobile ? (
+              <>
+                <Grid item xs={12}>
+                  <Button variant='outlined' startIcon={<FavoriteIcon />} fullWidth>Save</Button>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant='contained' onClick={onSearch} fullWidth>Search</Button>
+                </Grid>
+              </>
+            ) : (
+              <Grid item container xs={12} justifyContent='flex-end'>
+                <Button
+                  sx={{ mr: 2 }}
+                  variant='outlined'
+                  startIcon={<FavoriteIcon />}
+                >
+                  Save
+                </Button>
+                <Button variant='contained' onClick={onSearch}>Search</Button>
+              </Grid>
+            )
+          }
         </Grid>
       </LocalizationProvider>
     </Box>

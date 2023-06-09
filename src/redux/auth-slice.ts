@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import api from "@/api";
 import { User } from "@/type";
+import { history } from "@/utility/common";
 
 import { SignInPayload } from "@/features/sign-in/type";
 import { SignUpPayload } from "@/features/sign-up/type";
@@ -36,14 +37,6 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk(
-  "auth/logOut",
-  async () => {
-    const response = await api.LogOut();
-    return response.data;
-  }
-)
-
 export const AuthSlice = createSlice({
   name: "auth",
   initialState,
@@ -54,6 +47,13 @@ export const AuthSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+    },
+    logOut: (state) => {
+      state.user = undefined;
+      state.isAuthenticated = false;
+      localStorage.removeItem("jwtToken");
+      localStorage.removeItem("user");
+      history.navigate("/sign-in");
     },
   },
   extraReducers: (builder) => {
@@ -80,6 +80,6 @@ export const AuthSlice = createSlice({
   },
 });
 
-export const { setIsAuthenticated, setUser } = AuthSlice.actions;
+export const { setIsAuthenticated, setUser, logOut } = AuthSlice.actions;
 
 export default AuthSlice.reducer;
