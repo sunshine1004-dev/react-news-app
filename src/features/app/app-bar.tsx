@@ -3,7 +3,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '@/redux';
 import { styled } from '@mui/material/styles';
-import { logOut as logOutAction } from '@/redux/auth-slice';
+import { logOut } from '@/common/auth';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -44,8 +44,8 @@ export default ({ open, handleDrawerOpen }: Props) => {
   const navigation = useNavigate();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  const logOut = () => {
-    dispatch(logOutAction());
+  const signOut = () => {
+    logOut(dispatch);
   }
 
   return (
@@ -80,7 +80,7 @@ export default ({ open, handleDrawerOpen }: Props) => {
 
         {
           isAuthenticated &&
-          <Button sx={{ color: '#fff' }} onClick={logOut}>Log out</Button>
+          <Button sx={{ color: '#fff' }} onClick={signOut}>Log out</Button>
         }
       </Toolbar>
     </AppBar>

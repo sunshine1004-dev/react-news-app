@@ -7,7 +7,7 @@ import NewsApi from '@/features/newsapi';
 import Guardian from '@/features/guardian';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUserInfo } from '@/common/auth';
+import { setAuthorization } from '@/common/auth';
 import { User } from '@/type';
 
 type Props = {
@@ -25,8 +25,8 @@ const LoggedIn = (props: Props) => {
       if (parsedUser.exp * 1000 < Date.now()) {
         
       }
-
-      setUserInfo(dispatch);
+      
+      setAuthorization(dispatch);
     } else {
       navigate('/sign-in');
     }

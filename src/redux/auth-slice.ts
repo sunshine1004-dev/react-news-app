@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import api from "@/api";
 import { User } from "@/type";
-import { history } from "@/utility/common";
 
 import { SignInPayload } from "@/features/sign-in/type";
 import { SignUpPayload } from "@/features/sign-up/type";
@@ -51,9 +50,6 @@ export const AuthSlice = createSlice({
     logOut: (state) => {
       state.user = undefined;
       state.isAuthenticated = false;
-      localStorage.removeItem("jwtToken");
-      localStorage.removeItem("user");
-      history.navigate("/sign-in");
     },
   },
   extraReducers: (builder) => {

@@ -21,16 +21,17 @@ export type NewsApiArticle = {
 
 export type NewsApiQuery = {
   q?: string;
-  sources?: string;
+  sources?: string[];
   from?: string;
   to?: string;
   language?: string;
   category?: string;
   country?: string;
   author?: string;
-  sort_by?: "relevancy" | "popularity" | "publishedAt";
-  page_size?: number;
+  sortBy?: "relevancy" | "popularity" | "publishedAt";
+  pageSize?: number;
   page?: number;
+  apiKey?: string;
 };
 
 export type NewsApiCallMethod = 'everything' | 'topHeadlines';

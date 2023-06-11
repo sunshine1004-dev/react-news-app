@@ -46,7 +46,6 @@ const NewsApi = () => {
       const newSearchParams = new URLSearchParams(prevSearchParams);
 
       Object.entries(query).forEach(([key, value]) => {
-        console.log(key, value);
         if (value) {
           newSearchParams.set(key, String(value));
         }

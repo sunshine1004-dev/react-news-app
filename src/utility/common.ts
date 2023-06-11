@@ -5,9 +5,17 @@ export const capitalize = (str: string) => {
 type HistoryProps = {
   navigate: any;
   location: any;
+  search: {
+    searchParams: any;
+    setSearchParams: any;
+  };  
 }
 
 export const history: HistoryProps = {
   navigate: null,
   location: null,
+  search: {
+    searchParams: null,
+    setSearchParams: null,
+  }
 }

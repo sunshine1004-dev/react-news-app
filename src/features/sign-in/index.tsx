@@ -1,6 +1,6 @@
 import { Typography, CardHeader } from '@mui/material';
 import SignInForm from './sign-in-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ResponsiveContainer from '@/components/mq/auth-form-container';
 import { useDispatch } from 'react-redux';
 import { signIn as signInAction } from '@/redux/auth-slice';
@@ -10,14 +10,12 @@ import { login } from '@/common/auth';
 
 const SignIn = (props: ComponentProps) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const signUp = (payload: SignInPayload) => {
+  const signIn = (payload: SignInPayload) => {
     dispatch(signInAction(payload))
       .unwrap()
       .then((data: any) => {
         login(data, dispatch);
-        navigate('/');
       })
       .catch((err: Error) => {
         if (props.notification) {
@@ -36,7 +34,7 @@ const SignIn = (props: ComponentProps) => {
           <Typography variant='h4' align='center' gutterBottom>Welcome Back</Typography>
         }
       />
-      <SignInForm handleSubmit={signUp} />
+      <SignInForm handleSubmit={signIn} />
       <Typography color='gray' sx={{ marginTop: 3 }}>
         Don't you have an account? <Link to='/sign-up'>Register</Link>
       </Typography>

@@ -13,7 +13,7 @@ const NewsApi = () => {
 
   const queryObj: NewsApiQuery = Object.fromEntries(searchParams.entries());
   const page = queryObj.page;
-  const pageSize = queryObj.page_size;
+  const pageSize = queryObj.pageSize;
   const query = queryObj.q || '';
 
   const setPage = (page: number) => {
@@ -28,7 +28,7 @@ const NewsApi = () => {
   const setPageSize = (pageSize: number) => {
     setSearchParams((prevSearchParams) => {
       const newSearchParams = new URLSearchParams(prevSearchParams);
-      newSearchParams.set('page_size', String(pageSize));
+      newSearchParams.set('pageSize', String(pageSize));
       return newSearchParams.toString();
     });
   }
@@ -46,7 +46,6 @@ const NewsApi = () => {
       const newSearchParams = new URLSearchParams(prevSearchParams);
 
       Object.entries(query).forEach(([key, value]) => {
-        console.log(key, value);
         if (value) {
           newSearchParams.set(key, String(value));
         }

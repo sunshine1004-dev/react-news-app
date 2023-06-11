@@ -1,9 +1,9 @@
 import { MenuList, MenuItem, MenuItemProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { setNewsApiQuery } from '@/redux/news-slice'
 import { initialState, setGuardianQuery } from '@/redux/news-slice';
 import { useLocation } from 'react-router-dom';
+import { history } from "@/utility/common";
 
 const Menu = styled(MenuList)(({ theme }) => `
   background: ${theme.palette.error.light};
@@ -32,34 +32,31 @@ const Item = styled(MenuItem)<ItemProps>(({ theme, active }) => ({
   }
 }));
 
+export const initializeNewsApi = () => {
+  history.navigate('/newsapi');
+
+  setNewsApiQuery(initialState.newsApiQuery);
+  const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
+  history.search.setSearchParams(query);
+}
+
+export const initializeGuardian = () => {
+  history.navigate('/guardian');
+
+  setGuardianQuery(initialState.guardianQuery);
+  const query = Object.fromEntries(Object.entries(initialState.guardianQuery).map(([key, value]) => [key, String(value)]));
+  history.search.setSearchParams(query);
+}
+
 const AppNewsProvider = () => {
-  const navigate = useNavigate();
   const path = useLocation().pathname;
-  const [_searchParams, setSearchParams] = useSearchParams();
-
-
-  const getNewsApi = () => {
-    navigate('/newsapi');
-
-    setNewsApiQuery(initialState.newsApiQuery);
-    const query = Object.fromEntries(Object.entries(initialState.newsApiQuery).map(([key, value]) => [key, String(value)]));
-    setSearchParams(query);
-  }
-
-  const getGuardian = () => {
-    navigate('/guardian');
-
-    setGuardianQuery(initialState.guardianQuery);
-    const query = Object.fromEntries(Object.entries(initialState.guardianQuery).map(([key, value]) => [key, String(value)]));
-    setSearchParams(query);
-  }
 
   return (
     <Menu>
-      <Item onClick={getNewsApi} active={Number(path.startsWith('/newsapi'))}>
+      <Item onClick={initializeNewsApi} active={Number(path.startsWith('/newsapi'))}>
         NewsAPI
       </Item>
-      <Item onClick={getGuardian} active={Number(path.startsWith('/guardian'))}>
+      <Item onClick={initializeGuardian} active={Number(path.startsWith('/guardian'))}>
         The Guardian
       </Item>
       {/* <Item onClick={() => navigate('/nytimes')}>

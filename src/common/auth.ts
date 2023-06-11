@@ -1,5 +1,8 @@
 import jwtDecode from "jwt-decode";
-import { setUser } from "@/redux/auth-slice";
+import { setUser, logOut as logOutAction } from "@/redux/auth-slice";
+import axios from 'axios'
+import { history } from "@/utility/common";
+import { initializeNewsApi } from '@/features/app/app-news-provider';
 import { User } from "@/type";
 
 type Payload = {
@@ -19,17 +22,29 @@ export const login = (payload: Payload, dispatch: any) => {
 
   localStorage.setItem("jwtToken", payload.access_token);
   localStorage.setItem("user", JSON.stringify(user));
-  setUserInfo(dispatch);
+  setAuthorization(dispatch);
+  initializeNewsApi();
 };
 
-export const setUserInfo = (dispatch: any) => {
-  const user: string = localStorage.getItem("user") || "";
+export const setAuthorization = (dispatch: any) => {
+  const user = localStorage.getItem("user") || "";
+  const token = localStorage.getItem("jwtToken") || "";
+  setAuthHeader(token);
   dispatch(setUser(JSON.parse(user)));
 };
 
 export const logOut = (dispatch: any) => {
-  // dispatch('/sign-in');
   localStorage.removeItem('user');
   localStorage.removeItem('jwtToken');
-  dispatch()
+  clearAuthHeader();
+  dispatch(logOutAction());
+  history.navigate("/sign-in");
+}
+
+export const setAuthHeader = (token: string) => {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+}
+
+export const clearAuthHeader = () => {
+  axios.defaults.headers.common['Authorization'] = null;
 }

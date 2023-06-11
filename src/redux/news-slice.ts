@@ -7,6 +7,8 @@ import {
 } from "@/type";
 import api from "@/api";
 
+const newapiKey = import.meta.env.VITE_NEWS_API_KEY;
+
 export interface NewsState {
   total: number;
   type: "newsapi" | "guardian" | "nytimes";
@@ -25,8 +27,9 @@ export const initialState: NewsState = {
   fetchMethod: "topHeadlines",
   newsApiQuery: {
     page: 1,
-    page_size: 10,
-    sort_by: "relevancy",
+    pageSize: 10,
+    sortBy: "relevancy",
+    apiKey: newapiKey,
   },
   guardianQuery: {
     page: 1,

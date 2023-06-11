@@ -1,13 +1,12 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8000/api/";
-
 import { SignUpPayload } from "@/features/sign-up/type";
 import { SignInPayload } from "@/features/sign-in/type";
-import { Feed } from "@/type";
 import { NewsApiQuery, NewsApiCallMethod, GuardianQuery } from "@/type";
+import queryString from "query-string";
+import { Feed } from "@/type";
 
-const token = localStorage.getItem("jwtToken");
-const AuthHeader = { headers: { Authorization: "Bearer " + token } };
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const newsapiUrl = import.meta.env.VITE_NEWS_API_URL;
 
 export const SignUp = (user: SignUpPayload) =>
   axios.post(`${baseUrl}register`, user);
@@ -15,13 +14,13 @@ export const SignUp = (user: SignUpPayload) =>
 export const SignIn = (user: SignInPayload) =>
   axios.post(`${baseUrl}login`, user);
 
-export const LogOut = () => axios.post(`${baseUrl}logout`);
+// export const LogOut = () => axios.post(`${baseUrl}logout`);
 
 export const NewsApiCall = (query: NewsApiQuery, method: NewsApiCallMethod) => {
   if (method === "topHeadlines") {
-    return axios.post(`${baseUrl}newsapi`, query);
+    return axios.get(`${newsapiUrl}/top-headlines?${queryString.stringify(query)}`);
   } else {
-    return axios.post(`${baseUrl}newsapi/everything`, query);
+    return axios.get(`${newsapiUrl}/everything?${queryString.stringify(query)}`);
   }
 };
 
@@ -30,25 +29,24 @@ export const GuardianApiCall = (query: GuardianQuery) => {
 };
 
 export const GetFeedsAll = () => {
-  return axios.get(`${baseUrl}feed`, AuthHeader);
+  return axios.get(`${baseUrl}feed`);
 };
 
 export const CreateFeed = (feed: Feed, id?: string) => {
   if (id) {
-    return axios.post(`${baseUrl}feed/${id}`, feed, AuthHeader);
+    return axios.post(`${baseUrl}feed/${id}`, feed);
   } else {
-    return axios.post(`${baseUrl}feed`, feed, AuthHeader);
+    return axios.post(`${baseUrl}feed`, feed);
   }
 };
 
 export const RemoveFeed = (id: string) => {
-  return axios.delete(`${baseUrl}feed/${id}`, AuthHeader);
+  return axios.delete(`${baseUrl}feed/${id}`);
 }
 
 export default {
   SignUp,
   SignIn,
-  LogOut,
   NewsApiCall,
   GuardianApiCall,
   GetFeedsAll,
